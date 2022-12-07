@@ -1,11 +1,8 @@
-# Node.js and Express Hosted on Microsoft Azure Template
+MovieCRUD Assignment - by Brad Baldys
+Dependencies: Node.js, Express, MongoDB
 
-Dependencies: Node.js and Express
+MIT Licence
 
-This repository is a template that can be used to create a Node.js and Express website for hosting on Microsoft Azure.
-
-Initial Usage:
-- npm install express
-- npm start
+Originally from template and assignment by Eric Pogue.
 
 

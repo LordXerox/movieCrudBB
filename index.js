@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 const mongoose = require("mongoose");
+mongoose.set('strictQuery', true);
 
 const mongooseUri = "mongodb+srv://LordXerox:uUfvvJ77ZwHw4mKi@cluster0.ofvwa1e.mongodb.net/movieDatabase"
 mongoose.connect(mongooseUri, {useNewUrlParser: true}, {useUnifiedTopology: true})
@@ -49,19 +50,15 @@ app.get("/read", function(request, response) {
 //route to update.html
 	//checks note.title for all
 	//if note.title == req.body.title, overwrite title and comments of note
-	app.post("/update", function(req, res){
-		Movie.find({title: String(req.body.old)}).then(note => { 
-			Movie.updateOne(
-				{$set:{title: req.body.title, comments: req.body.comments}})
-
+app.post("/update", async (req, res) => {
 				
-			//Movie.updateOne({ _id: String(note._id)},
-				//{$set:{title: req.body.title, comments: req.body.comments}})
-				
-			})
+	await Movie.updateOne({title: String(req.body.old)}, {$set:{title: req.body.title, comments: req.body.comments}})
 		
-		res.redirect("/");
-	})
+	res.redirect("/");
+})
+		
+		
+
 
 //search.html - return movies that match title
 app.post("/search", function(req, res){
@@ -72,10 +69,9 @@ app.post("/search", function(req, res){
 })
 
 //delete.html - delete movie
-app.post("/delete", function(req, res){
-	Movie.find({title: String(req.body.title)}).then(note => { 
-		console.log(note)
-		})
+app.post("/delete", async (req, res) => {
+	await Movie.deleteOne({title: String(req.body.title)})
+
 
 	res.redirect("/");
 })
